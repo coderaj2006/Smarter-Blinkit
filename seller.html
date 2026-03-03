@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Seller Dashboard</h2>
+
+    <h3>Add New Product</h3>
+    <input type="text" id="newName" placeholder="Product Name">
+    <input type="number" id="newPrice" placeholder="Price">
+    <input type="number" id="newStock" placeholder="Stock">
+    <button onclick="addProduct()">Add Product</button>
+
+    <h3>Inventory</h3>
+    <div id="inventoryList"></div>
+</div>
+
+<script src="js/seller.js"></script>
+</body>
+</html>
