@@ -10,10 +10,14 @@
 <div class="container">
     <h2>Buyer Dashboard</h2>
 
-    <input type="text" id="searchInput" placeholder="Search for items...">
-    <button onclick="searchItems()">Search</button>
+    <div class="cart-info">
+    🛒 Cart: <span id="cartCount">0</span>
+    </div>
 
-    <div id="results"></div>
+    <div id="productGrid" class="grid"></div>
+
+    <script src="js/search.js"></script>
+    <script src="js/cart.js"></script>
 </div>
 
 <script src="js/search.js"></script>
