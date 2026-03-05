@@ -1,51 +1,17 @@
-const products = [
-    { id: 1, name: "Honey", price: 120 },
-    { id: 2, name: "Ginger", price: 40 },
-    { id: 3, name: "Flour", price: 60 },
-    { id: 4, name: "Cheese", price: 150 },
-    { id: 5, name: "Tomato Sauce", price: 90 }
-];
+// Load products from seller inventory
+let products = JSON.parse(localStorage.getItem("inventory")) || [];
 
-const intentMap = {
-    cold: ["Honey", "Ginger"],
-    pizza: ["Flour", "Cheese", "Tomato Sauce"]
-};
-
-function searchItems() {
-    const query = document.getElementById("searchInput").value.toLowerCase();
-    const resultsDiv = document.getElementById("results");
-    resultsDiv.innerHTML = "";
-
-    let matchedProducts = [];
-
-    for (let key in intentMap) {
-        if (query.includes(key)) {
-            matchedProducts = intentMap[key];
-        }
-    }
-
-    if (matchedProducts.length === 0) {
-        matchedProducts = products
-            .filter(p => p.name.toLowerCase().includes(query))
-            .map(p => p.name);
-    }
-
-    if (matchedProducts.length === 0) {
-        resultsDiv.innerHTML = "<p>No items found</p>";
-        return;
-    }
-
-    matchedProducts.forEach(item => {
-        const p = document.createElement("p");
-        p.textContent = item;
-        resultsDiv.appendChild(p);
-    });
-}
-function displayProducts() {
+// ---------- Product Renderer ----------
+function renderProducts(list) {
     const grid = document.getElementById("productGrid");
     grid.innerHTML = "";
 
-    products.forEach(product => {
+    if (list.length === 0) {
+        grid.innerHTML = "<p>No products found</p>";
+        return;
+    }
+
+    list.forEach(product => {
         const card = document.createElement("div");
         card.className = "card";
 
@@ -59,4 +25,34 @@ function displayProducts() {
     });
 }
 
-displayProducts();
+// ---------- Intent Map ----------
+const intentMap = {
+    cold: ["Honey", "Ginger"],
+    pizza: ["Flour", "Cheese", "Tomato Sauce"]
+};
+
+// ---------- Search Logic ----------
+function searchProducts() {
+    const query = document.getElementById("searchInput").value.toLowerCase();
+
+    let results = [];
+
+    for (let key in intentMap) {
+        if (query.includes(key)) {
+            results = products.filter(p =>
+                intentMap[key].includes(p.name)
+            );
+        }
+    }
+
+    if (results.length === 0) {
+        results = products.filter(p =>
+            p.name.toLowerCase().includes(query)
+        );
+    }
+
+    renderProducts(results);
+}
+
+// ---------- Initial Page Load ----------
+renderProducts(products);
