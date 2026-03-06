@@ -16,10 +16,12 @@ function renderProducts(list) {
         card.className = "card";
 
         card.innerHTML = `
-            <h3>${product.name}</h3>
-            <p>₹${product.price}</p>
-            <button onclick="addToCart(${product.id})">Add to Cart</button>
-        `;
+    <h3>${product.name}</h3>
+    <p>₹${product.price}</p>
+    <p>Seller: ${product.shop}</p>
+    <p>Distance: ${product.distance} km</p>
+    <button onclick="addToCart(${product.id})">Add to Cart</button>
+`;
 
         grid.appendChild(card);
     });

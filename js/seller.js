@@ -1,7 +1,4 @@
-let inventory = JSON.parse(localStorage.getItem("inventory")) || [
-    { id: 1, name: "Honey", price: 120, stock: 10 },
-    { id: 2, name: "Ginger", price: 40, stock: 15 }
-];
+let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 
 function saveInventory() {
     localStorage.setItem("inventory", JSON.stringify(inventory));
@@ -47,11 +44,13 @@ function addProduct() {
     }
 
     inventory.push({
-        id: Date.now(),
-        name,
-        price,
-        stock
-    });
+    id: Date.now(),
+    name,
+    price,
+    stock,
+    shop: "Shop " + Math.floor(Math.random() * 3 + 1),
+    distance: Math.floor(Math.random() * 10 + 1)
+});
 
     saveInventory();
     displayInventory();
@@ -61,4 +60,4 @@ function addProduct() {
     document.getElementById("newStock").value = "";
 }
 
-displayInventory();
+displayInventory(); 
