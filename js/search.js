@@ -44,24 +44,38 @@ function renderProducts(list) {
 
 // ---------- Intent Map ----------
 const intentMap = {
-    cold: ["Honey", "Ginger"],
-    pizza: ["Flour", "Cheese", "Tomato Sauce"]
+    cold: ["honey", "ginger", "lemon"],
+    cough: ["honey", "ginger"],
+    breakfast: ["milk", "banana", "apple"],
+    salad: ["tomato", "carrot"],
+    baking: ["flour", "sugar", "butter"],
+    energy: ["banana", "milk"],
+    pizza: ["flour", "cheese", "tomato"]
 };
 
 // ---------- Search Logic ----------
 function searchProducts() {
-    const query = document.getElementById("searchInput").value.toLowerCase();
+
+    const query = document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
 
     let results = [];
 
-    for (let key in intentMap) {
+    // Intent-based search
+    for (const key in intentMap) {
         if (query.includes(key)) {
+
             results = products.filter(p =>
-                intentMap[key].includes(p.name)
+                intentMap[key].includes(p.name.toLowerCase())
             );
+
+            break;
         }
     }
 
+    // fallback: normal product name search
     if (results.length === 0) {
         results = products.filter(p =>
             p.name.toLowerCase().includes(query)
