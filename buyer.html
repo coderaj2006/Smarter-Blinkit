@@ -6,7 +6,27 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<header class="navbar">
+  <div class="nav-left">
+      <h2>Smarter Blinkit</h2>
+  </div>
 
+  <div class="nav-right">
+      <button onclick="window.location.href='cart.html'">
+          🛒 Cart
+      </button>
+  </div>
+</header>
+<div class="assistant-box">
+
+<input 
+id="searchInput"
+placeholder="Ask the AI assistant (e.g. I have a cold)"
+>
+
+<button onclick="searchProducts()">Ask</button>
+
+</div>
 <div class="container">
     <h2>Buyer Dashboard</h2>
 
