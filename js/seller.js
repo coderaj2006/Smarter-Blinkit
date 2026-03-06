@@ -1,5 +1,15 @@
 let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
-
+const barcodeMap = {
+    "111": "milk",
+    "112": "apple",
+    "113": "banana",
+    "114": "tomato",
+    "115": "potato",
+    "116": "rice",
+    "117": "flour",
+    "118": "honey",
+    "119": "ginger"
+};
 function saveInventory() {
     localStorage.setItem("inventory", JSON.stringify(inventory));
 }
@@ -61,3 +71,33 @@ function addProduct() {
 }
 
 displayInventory(); 
+function scanBarcode() {
+
+    const code = document
+        .getElementById("barcodeInput")
+        .value;
+
+    const productName = barcodeMap[code];
+
+    if (!productName) {
+        alert("Unknown barcode");
+        return;
+    }
+
+    const item = inventory.find(
+        p => p.name.toLowerCase() === productName
+    );
+
+    if (!item) {
+        alert("Product not in inventory");
+        return;
+    }
+
+    item.stock += 1;
+
+    saveInventory();
+
+    displayInventory();
+
+    alert(productName + " stock increased");
+}
