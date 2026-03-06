@@ -1,6 +1,17 @@
 // Load products from seller inventory
 let products = JSON.parse(localStorage.getItem("inventory")) || [];
-
+const imageMap = {
+    apple: "apple.jpg",
+    banana: "banana.jpg",
+    cheese: "cheese.jpg",
+    flour: "flour.jpg",
+    ginger: "ginger.jpg",
+    honey: "honey.jpg",
+    milk: "milk.jpg",
+    potato: "potato.jpg",
+    rice: "rice.jpg",
+    tomato: "tomato.jpg"
+};
 // ---------- Product Renderer ----------
 function renderProducts(list) {
     const grid = document.getElementById("productGrid");
@@ -16,11 +27,15 @@ function renderProducts(list) {
         card.className = "card";
 
         card.innerHTML = `
-    <h3>${product.name}</h3>
-    <p>₹${product.price}</p>
-    <p>Seller: ${product.shop}</p>
-    <p>Distance: ${product.distance} km</p>
-    <button onclick="addToCart(${product.id})">Add to Cart</button>
+            <img src="assets/products/${imageMap[product.name.toLowerCase()] || 'apple.jpg'}"
+     class="product-img">
+
+            <h3>${product.name}</h3>
+            <p>₹${product.price}</p>
+            <p>Seller: ${product.shop}</p>
+            <p>Distance: ${product.distance} km</p>
+
+            <button onclick="addToCart(${product.id})">Add to Cart</button>
 `;
 
         grid.appendChild(card);

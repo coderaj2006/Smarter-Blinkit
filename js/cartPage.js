@@ -1,6 +1,22 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
+function groupCartByShop(cart) {
 
+    const grouped = {};
+
+    cart.forEach(item => {
+
+        if (!grouped[item.shop]) {
+            grouped[item.shop] = [];
+        }
+
+        grouped[item.shop].push(item);
+
+    });
+
+    return grouped;
+}
 function displayCart() {
+
     const cartDiv = document.getElementById("cartItems");
     const totalPriceEl = document.getElementById("totalPrice");
 
@@ -8,27 +24,42 @@ function displayCart() {
 
     let total = 0;
 
-    cart.forEach((item, index) => {
-        total += item.price;
+    const groupedCart = groupCartByShop(cart);
 
-        const div = document.createElement("div");
-        div.className = "card";
+    for (const shop in groupedCart) {
 
-        div.innerHTML = `
-            <h3>${item.name}</h3>
-            <p>₹${item.price}</p>
-            <button onclick="removeItem(${index})">Remove</button>
-        `;
+        const shopTitle = document.createElement("h3");
+        shopTitle.textContent = shop;
+        cartDiv.appendChild(shopTitle);
 
-        cartDiv.appendChild(div);
-    });
+        groupedCart[shop].forEach((item, index) => {
+
+            total += item.price;
+
+            const div = document.createElement("div");
+            div.className = "card";
+
+            div.innerHTML = `
+                <h3>${item.name}</h3>
+                <p>₹${item.price}</p>
+                <button onclick="removeItem(${item.id})">Remove</button>
+            `;
+
+            cartDiv.appendChild(div);
+
+        });
+
+    }
 
     totalPriceEl.textContent = total;
 }
 
-function removeItem(index) {
-    cart.splice(index, 1);
+function removeItem(id) {
+
+    cart = cart.filter(item => item.id !== id);
+
     localStorage.setItem("cart", JSON.stringify(cart));
+
     displayCart();
 }
 

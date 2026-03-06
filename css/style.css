@@ -26,11 +26,11 @@ body {
 }
 
 .card {
-    background: white;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+    padding: 15px;
+    width: 200px;
     text-align: center;
+    border-radius: 10px;
 }
 
 .card button {
@@ -46,4 +46,24 @@ body {
 .cart-info {
     margin-top: 10px;
     font-weight: bold;
+}
+.product-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 10px;
+}
+#productGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+button {
+    background: #2ecc71;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
 }

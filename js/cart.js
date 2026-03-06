@@ -1,5 +1,4 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
 function addToCart(productId) {
 
     const product = products
@@ -13,7 +12,13 @@ function addToCart(productId) {
         product.distance + " km"
     );
 
-    cart.push(product);
+    cart.push({
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    shop: product.shop,
+    distance: product.distance
+    });
     localStorage.setItem("cart", JSON.stringify(cart));
     updateCartCount();
 }
