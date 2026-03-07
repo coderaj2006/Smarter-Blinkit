@@ -54,51 +54,41 @@ const intentMap = {
 };
 
 // ---------- Search Logic ----------
-async function searchProducts() {
+function searchProducts(){
 
-    const query = document.getElementById("searchInput").value;
+    const query = document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
 
-    const response = await fetch("http://localhost:3000/ai-intent", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ query })
-    });
+    console.log("User query:", query);
 
-    const data = await response.json();
+    let results = [];
 
-    const items = data.items
-  .toLowerCase()
-  .split(",")
-  .map(i => i.trim());
+    for(const key in intentMap){
 
-    const results = products.filter(p =>
-        items.some(item => item.includes(p.name.toLowerCase()))
-);
+    if(query.includes(key)){
+
+        console.log("Intent matched:", key);
+
+        results = products.filter(p =>
+            intentMap[key].includes(p.name.toLowerCase().trim())
+        );
+
+        console.log("Filtered results:", results);
+
+        break;
+        }
+    }
+    if(results.length === 0){
+    results = products.filter(p =>
+        p.name.toLowerCase().includes(query)
+    );
+}
 
     renderProducts(results);
     showAddAllButton(results);
-}
-function addAllToCart(products){
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    products.forEach(product => {
-
-        cart.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            shop: product.shop,
-            distance: product.distance
-        });
-
-    });
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    alert("All items added to cart");
 }
 function showAddAllButton(products){
 
@@ -115,6 +105,27 @@ function showAddAllButton(products){
         </button>
     `;
 }
+function addAllToCart(products){
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    updateCartCount();
+    products.forEach(product => {
+
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            shop: product.shop,
+            distance: product.distance
+        });
+
+    });
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("All items added to cart");
+}
+
 
 // ---------- Initial Page Load ----------
 renderProducts(products);

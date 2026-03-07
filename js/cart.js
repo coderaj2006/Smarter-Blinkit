@@ -23,8 +23,15 @@ function addToCart(productId) {
     updateCartCount();
 }
 
-function updateCartCount() {
-    document.getElementById("cartCount").textContent = cart.length;
+function updateCartCount(){
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const countElement = document.getElementById("cartCount");
+
+    if(countElement){
+        countElement.textContent = cart.length;
+    }
 }
 
 updateCartCount();
