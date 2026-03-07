@@ -37,14 +37,18 @@ function renderInventory(){
         row.className = "inventory-row";
 
         row.innerHTML = `
-            <span>${product.name}</span>
-            <span>₹${product.price}</span>
-            <span>
-                Stock: ${product.stock}
-                ${product.stock < 3 ? " ⚠ Low Stock" : ""}
-            </span>
-            <button onclick="changeStock(${index}, 1)">+</button>
-            <button onclick="changeStock(${index}, -1)">-</button>
+        <span>${product.name}</span>
+        <span>₹${product.price}</span>
+        
+        <span>
+            ${product.stock}
+            ${product.stock < 3 ? " ⚠ Low" : ""}
+        </span>
+
+        <span class="action-buttons">
+            <button onclick="changeStock(${index},1)">+</button>
+            <button onclick="changeStock(${index},-1)">-</button>
+        </span>
         `;
         
         list.appendChild(row);

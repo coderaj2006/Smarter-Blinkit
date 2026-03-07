@@ -9,19 +9,33 @@
 
 <div class="container">
     <h2>Seller Dashboard</h2>
-
+    <div class="seller-form"></div>
     <h3>Add New Product</h3>
     <input type="text" id="newName" placeholder="Product Name">
     <input type="number" id="newPrice" placeholder="Price">
     <input type="number" id="newStock" placeholder="Stock">
     <button onclick="addProduct()">Add Product</button>
+    </div>
     <h3>Barcode Stock Update</h3>
 
     <input type="text" id="barcodeInput" placeholder="Enter barcode">
 
     <button onclick="scanBarcode()">Scan</button>
+    <div class="inventory-section">
     <h3>Inventory</h3>
+    <div class="inventory-table">
+
+    <div class="inventory-header">
+    <span>Product</span>
+    <span>Price</span>
+    <span>Stock</span>
+    <span>Actions</span>
+    </div>
+
     <div id="inventoryList"></div>
+
+    </div>
+    </div>
 </div>
 
 <script src="js/seller.js"></script>

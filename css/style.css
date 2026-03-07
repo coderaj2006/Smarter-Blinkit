@@ -233,3 +233,45 @@ button{
     padding:10px;
     border-bottom:1px solid #eee;
 }
+.inventory-table{
+    margin-top:20px;
+    background:white;
+    padding:15px;
+    border-radius:10px;
+}
+
+.inventory-header{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    font-weight:bold;
+    padding:10px;
+    border-bottom:2px solid #ddd;
+}
+
+.inventory-row{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    padding:10px;
+    border-bottom:1px solid #eee;
+}
+
+.inventory-row button{
+    padding:4px 8px;
+    margin:2px;
+}
+.inventory-row span{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+.action-buttons{
+    display:flex;
+    gap:8px;
+}
+
+.action-buttons button{
+    padding:5px 10px;
+}
+.inventory-row:nth-child(even){
+    background:#f9f9f9;
+}
