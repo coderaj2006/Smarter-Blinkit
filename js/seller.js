@@ -14,25 +14,6 @@ function saveInventory() {
     localStorage.setItem("inventory", JSON.stringify(inventory));
 }
 
-function displayInventory() {
-    const container = document.getElementById("inventoryList");
-    container.innerHTML = "";
-
-    inventory.forEach((item, index) => {
-        const div = document.createElement("div");
-        div.className = "card";
-
-        div.innerHTML = `
-            <h3>${item.name}</h3>
-            <p>Price: ₹${item.price}</p>
-            <p>Stock: ${item.stock}</p>
-            <button onclick="changeStock(${index}, 1)">+</button>
-            <button onclick="changeStock(${index}, -1)">-</button>
-        `;
-
-        container.appendChild(div);
-    });
-}
 
 function changeStock(index, value) {
     inventory[index].stock += value;
@@ -40,9 +21,37 @@ function changeStock(index, value) {
         inventory[index].stock = 0;
     }
     saveInventory();
-    displayInventory();
+    renderInventory();
+   
 }
+function renderInventory(){
 
+    const list = document.getElementById("inventoryList");
+
+    list.innerHTML = "";
+
+    inventory.forEach((product, index) => {
+
+        const row = document.createElement("div");
+
+        row.className = "inventory-row";
+
+        row.innerHTML = `
+            <span>${product.name}</span>
+            <span>₹${product.price}</span>
+            <span>
+                Stock: ${product.stock}
+                ${product.stock < 3 ? " ⚠ Low Stock" : ""}
+            </span>
+            <button onclick="changeStock(${index}, 1)">+</button>
+            <button onclick="changeStock(${index}, -1)">-</button>
+        `;
+        
+        list.appendChild(row);
+
+    });
+
+}
 function addProduct() {
     const name = document.getElementById("newName").value;
     const price = parseInt(document.getElementById("newPrice").value);
@@ -61,16 +70,17 @@ function addProduct() {
     shop: "Shop " + Math.floor(Math.random() * 3 + 1),
     distance: Math.floor(Math.random() * 10 + 1)
 });
-
+    localStorage.setItem("inventory", JSON.stringify(inventory));
+    renderInventory();
     saveInventory();
-    displayInventory();
+    
 
     document.getElementById("newName").value = "";
     document.getElementById("newPrice").value = "";
     document.getElementById("newStock").value = "";
 }
 
-displayInventory(); 
+ 
 function scanBarcode() {
 
     const code = document
@@ -96,8 +106,10 @@ function scanBarcode() {
     item.stock += 1;
 
     saveInventory();
-
-    displayInventory();
+    renderInventory();
+    
 
     alert(productName + " stock increased");
+    document.getElementById("barcodeInput").value="";
 }
+renderInventory();
