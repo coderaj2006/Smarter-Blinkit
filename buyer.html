@@ -29,11 +29,20 @@ placeholder="Ask the AI assistant (e.g. I have a cold)"
 </div>
 <div id="assistantResponse"></div>
 <div class="container">
+    <div class="category-bar">
+
+    <button onclick="filterCategory('all')">All</button>
+    <button onclick="filterCategory('fruits')">Fruits</button>
+    <button onclick="filterCategory('vegetables')">Vegetables</button>
+    <button onclick="filterCategory('dairy')">Dairy</button>
+    <button onclick="filterCategory('bakery')">Bakery</button>
+
+</div>
     <h2>Buyer Dashboard</h2>
 
     <div class="cart-info">
     <a href="cart.html" style="text-decoration:none; color:black;">
-    🛒 Cart: <span id="cartCount">0</span>
+    🛒 Cart: <span id="cartCountDashboard">0</span>
 </a>
     </div>
     

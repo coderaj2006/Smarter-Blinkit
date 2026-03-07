@@ -27,11 +27,17 @@ function updateCartCount(){
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    const countElement = document.getElementById("cartCount");
+    const navCounter = document.getElementById("cartCount");
+    const dashboardCounter = document.getElementById("cartCountDashboard");
 
-    if(countElement){
-        countElement.textContent = cart.length;
+    if(navCounter){
+        navCounter.textContent = cart.length;
     }
+
+    if(dashboardCounter){
+        dashboardCounter.textContent = cart.length;
+    }
+
 }
 
 updateCartCount();

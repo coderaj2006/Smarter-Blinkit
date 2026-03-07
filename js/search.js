@@ -14,6 +14,7 @@ const imageMap = {
 };
 // ---------- Product Renderer ----------
 function renderProducts(list) {
+    list.sort((a, b) => a.distance - b.distance);
     const grid = document.getElementById("productGrid");
     grid.innerHTML = "";
 
@@ -51,6 +52,17 @@ const intentMap = {
     baking: ["flour", "sugar", "butter"],
     energy: ["banana", "milk"],
     pizza: ["flour", "cheese", "tomato"]
+};
+const categoryMap = {
+
+    fruits: ["apple","banana","mango","orange"],
+
+    vegetables: ["potato","tomato","onion","carrot"],
+
+    dairy: ["milk","cheese","yogurt","butter"],
+
+    bakery: ["flour","bread","cake"]
+
 };
 
 // ---------- Search Logic ----------
@@ -100,10 +112,30 @@ function showAddAllButton(products){
     }
 
     container.innerHTML = `
-        <button onclick='addAllToCart(${JSON.stringify(products)})'>
-        Add all suggested items to cart
-        </button>
+    <p class="assistant-text">
+    Assistant Suggestion: These ingredients may help.
+    </p>
+
+    <button onclick='addAllToCart(${JSON.stringify(products)})'>
+    Add all suggested items to cart
+    </button>
     `;
+}
+function filterCategory(category){
+
+    if(category === "all"){
+        renderProducts(products);
+        return;
+    }
+
+    const items = categoryMap[category];
+
+    const results = products.filter(p =>
+        items.includes(p.name.toLowerCase().trim())
+    );
+
+    renderProducts(results);
+
 }
 function addAllToCart(products){
 
