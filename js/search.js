@@ -54,35 +54,66 @@ const intentMap = {
 };
 
 // ---------- Search Logic ----------
-function searchProducts() {
+async function searchProducts() {
 
-    const query = document
-        .getElementById("searchInput")
-        .value
-        .toLowerCase();
+    const query = document.getElementById("searchInput").value;
 
-    let results = [];
+    const response = await fetch("http://localhost:3000/ai-intent", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ query })
+    });
 
-    // Intent-based search
-    for (const key in intentMap) {
-        if (query.includes(key)) {
+    const data = await response.json();
 
-            results = products.filter(p =>
-                intentMap[key].includes(p.name.toLowerCase())
-            );
+    const items = data.items
+  .toLowerCase()
+  .split(",")
+  .map(i => i.trim());
 
-            break;
-        }
-    }
-
-    // fallback: normal product name search
-    if (results.length === 0) {
-        results = products.filter(p =>
-            p.name.toLowerCase().includes(query)
-        );
-    }
+    const results = products.filter(p =>
+        items.some(item => item.includes(p.name.toLowerCase()))
+);
 
     renderProducts(results);
+    showAddAllButton(results);
+}
+function addAllToCart(products){
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    products.forEach(product => {
+
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            shop: product.shop,
+            distance: product.distance
+        });
+
+    });
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("All items added to cart");
+}
+function showAddAllButton(products){
+
+    const container = document.getElementById("assistantResponse");
+
+    if(products.length === 0){
+        container.innerHTML = "";
+        return;
+    }
+
+    container.innerHTML = `
+        <button onclick='addAllToCart(${JSON.stringify(products)})'>
+        Add all suggested items to cart
+        </button>
+    `;
 }
 
 // ---------- Initial Page Load ----------

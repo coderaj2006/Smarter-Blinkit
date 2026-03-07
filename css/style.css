@@ -169,3 +169,15 @@ body{
 button{
     cursor:pointer;
 }
+#assistantResponse{
+    margin-top:20px;
+    text-align:center;
+}
+
+#assistantResponse button{
+    background:#ff7a00;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+}

@@ -2,10 +2,10 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const fetch = require("node-fetch");
-
-if (!process.env.OPENAI_API_KEY) {
-    console.error("Missing OPENAI_API_KEY in .env file");
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
+if (!process.env.GEMINI_API_KEY) {
+    console.error("Missing GEMINI_API_KEY in .env file");
     process.exit(1);
 }
 
@@ -20,35 +20,35 @@ app.post("/ai-intent", async (req, res) => {
 
     try {
 
-        const response = await fetch(
-            "https://api.openai.com/v1/chat/completions",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: "gpt-4o-mini",
-                    messages: [
-                        {
-                            role: "system",
-                            content:
-                                "Extract grocery items from the request and return only item names separated by commas."
-                        },
-                        {
-                            role: "user",
-                            content: query
-                        }
-                    ]
-                })
-            }
+                const response = await fetch(
+                    `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+        {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+            contents: [
+                {
+                parts: [
+                    {
+                    text: `Extract grocery item names from this request and return ONLY a comma-separated list: ${query}`
+                    }
+                ]
+                }
+            ]
+            })
+        }
         );
 
         const data = await response.json();
 
+        console.log("Full API response:", data);
+
         const result =
-    data?.choices?.[0]?.message?.content || "";
+            data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
+        console.log("AI response:", result);
 
         res.json({ items: result });
 

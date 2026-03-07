@@ -298,7 +298,56 @@ Possible extensions of the platform include:
 # License
 
 MIT License
+-----Progress Till Now--------
+# Smarter Blinkit
 
+Smarter Blinkit is a prototype marketplace platform that connects buyers with nearby sellers and optimizes product routing using local-first logic.
 
+## Features
+
+### Buyer Side
+- Browse products in a grid layout
+- AI-style intent-based search (e.g., "cold", "breakfast")
+- Add products to cart
+- Multi-shop cart grouping
+- Checkout simulation
+
+### Seller Side
+- Add new products
+- Manage inventory
+- Update stock
+- Barcode-based inventory modification
+
+### Marketplace Logic
+- Shared inventory system
+- Local-first routing (distance-based)
+- Product metadata management
+
+## Screenshots
+
+### Buyer Dashboard
+![Buyer Dashboard](assets/screenshots/buyer-dashboard.png)
+
+### Seller Dashboard
+![Seller Dashboard](assets/screenshots/seller-dashboard.png)
+
+## Tech Stack
+
+- HTML
+- CSS
+- JavaScript
+- LocalStorage for data persistence
+
+## Project Status
+
+Stage 1 Completed:
+- Core marketplace functionality implemented
+- Buyer and seller dashboards operational
+- Inventory and cart systems functional
+
+Next Steps:
+- Improve UI
+- Add smarter AI assistant logic
+- Optimize routing algorithms
 
 
