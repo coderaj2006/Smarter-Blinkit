@@ -93,49 +93,69 @@ function checkout(){
     window.location.href = "buyer.html";
 
 }
+function calculateTotal(cart){
+
+    return cart.reduce((total,item) => {
+        return total + item.price;
+    },0);
+
+}
 function optimizeCart(cart){
 
-    const grouped = {};
-
-    // group items by product name
-    cart.forEach(item => {
-
-        if(!grouped[item.name]){
-            grouped[item.name] = [];
-        }
-
-        grouped[item.name].push(item);
-
-    });
+    let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 
     const optimized = [];
 
-    for(const name in grouped){
+    cart.forEach(item => {
 
-        const items = grouped[name];
+        const sellers = inventory.filter(p =>
+            p.name.toLowerCase().trim() === item.name.toLowerCase().trim()
+        );
 
-        // sort by price + distance
-        items.sort((a,b) => (a.price + a.distance) - (b.price + b.distance));
+        if(sellers.length === 0){
+            optimized.push(item);
+            return;
+        }
 
-        optimized.push(...items);
+        const bestSeller = sellers.sort(
+            (a,b) => (a.price + a.distance) - (b.price + b.distance)
+        )[0];
 
-    }
+        optimized.push(bestSeller);
+
+    });
 
     return optimized;
-
 }
 function optimizeCartUI(){
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+    // clone original cart BEFORE optimization
+    const originalCart = JSON.parse(JSON.stringify(cart));
+
+    const originalTotal = calculateTotal(originalCart);
+
     const optimized = optimizeCart(cart);
 
+    const optimizedTotal = calculateTotal(optimized);
+
+    const savings = originalTotal - optimizedTotal;
+
+    // now update the cart
     localStorage.setItem("cart", JSON.stringify(optimized));
 
     displayCart();
 
-    alert("Cart optimized using nearest sellers");
+    const message = document.getElementById("savingsMessage");
+
+    if(message){
+        if(savings > 0){
+            message.textContent = "Cart optimized! You saved ₹" + savings;
+        } else {
+            message.textContent = "Cart already optimized.";
+        }
+    }
 
 }
-
 displayCart();
